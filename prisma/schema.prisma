@@ -9,3 +9,15 @@ datasource db {
 generator client {
   provider = "prisma-client-js"
 }
+
+model Product {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name        String
+  description String?
+  price       Decimal
+  sku         String  @unique
+  published   Boolean @default(false)
+}
