@@ -12,7 +12,7 @@ export class ProductsService {
   }
 
   findAll() {
-    return `This action returns all products`;
+    return this.prisma.product.findMany({ where: { published: true } });
   }
 
   findOne(id: number) {
