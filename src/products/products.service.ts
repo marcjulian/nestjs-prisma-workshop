@@ -19,8 +19,8 @@ export class ProductsService {
     return this.prisma.product.findUnique({ where: { id: id } });
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+  update(id: string, updateProductDto: UpdateProductDto) {
+    return this.prisma.product.update({ where: { id: id }, data: updateProductDto });
   }
 
   remove(id: number) {
