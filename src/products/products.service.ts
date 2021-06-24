@@ -15,8 +15,8 @@ export class ProductsService {
     return this.prisma.product.findMany({ where: { published: true } });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
+  findOne(id: string) {
+    return this.prisma.product.findUnique({ where: { id: id } });
   }
 
   update(id: number, updateProductDto: UpdateProductDto) {
