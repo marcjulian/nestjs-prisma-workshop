@@ -1,6 +1,7 @@
+import { Product, Prisma } from '@prisma/client';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class ProductEntity {
+export class ProductEntity implements Product {
   @ApiProperty()
   id: string;
 
@@ -14,10 +15,10 @@ export class ProductEntity {
   name: string;
 
   @ApiProperty({ required: false, nullable: true })
-  description?: string;
+  description: string | null;
 
-  @ApiProperty()
-  price: string;
+  @ApiProperty({ type: String })
+  price: Prisma.Decimal;
 
   @ApiProperty()
   sku: string;
