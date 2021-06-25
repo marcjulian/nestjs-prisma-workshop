@@ -5,9 +5,14 @@ import { Prisma } from '@prisma/client';
 @Catch(Prisma.PrismaClientKnownRequestError)
 export class PrismaClientExceptionFilter extends BaseExceptionFilter {
   catch(exception: Prisma.PrismaClientKnownRequestError, host: ArgumentsHost) {
-		// TODO catch error exception.code
-		
-		// default 500 error code
-    super.catch(exception, host);
+    switch (exception.code) {
+      case 'P2002':
+        // TODO return conflict response
+        break;
+      default:
+        // default 500 error code
+        super.catch(exception, host);
+        break;
+    }
   }
 }
