@@ -33,4 +33,8 @@ export class ProductsService {
   remove(id: string) {
     return this.prisma.product.delete({ where: { id: id } });
   }
+
+  findPage() {
+    // TODO implement cursor-base pagination
+  }
 }

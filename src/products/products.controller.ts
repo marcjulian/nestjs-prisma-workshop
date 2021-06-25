@@ -39,6 +39,11 @@ export class ProductsController {
     const drafts = await this.productsService.findDrafts();
     return drafts.map((product) => new ProductEntity(product));
   }
+  
+  @Get('page')
+  async findPage() {
+    return this.productsService.findPage();
+  }
 
   @Get(':id')
   @ApiOkResponse({ type: ProductEntity })
