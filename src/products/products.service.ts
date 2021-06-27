@@ -15,6 +15,10 @@ export class ProductsService {
     return this.prisma.product.findMany({ where: { published: true } });
   }
 
+  findDrafts() {
+    return this.prisma.product.findMany({ where: { published: false } });
+  }
+
   findOne(id: string) {
     return this.prisma.product.findUnique({ where: { id: id } });
   }

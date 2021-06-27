@@ -1,4 +1,3 @@
-import { Product } from '@prisma/client';
 import {
   Controller,
   Get,
@@ -31,6 +30,13 @@ export class ProductsController {
   async findAll() {
     const products = await this.productsService.findAll();
     return products.map((product) => new ProductEntity(product));
+  }
+
+  @Get('drafts')
+  @ApiCreatedResponse({ type: [ProductEntity] })
+  async findDrafts() {
+    const drafts = await this.productsService.findDrafts();
+    return drafts.map((product) => new ProductEntity(product));
   }
 
   @Get(':id')
