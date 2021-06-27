@@ -1,3 +1,4 @@
+import { ConnectionArgs } from './../page/connection-args.dto';
 import { Injectable } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -36,7 +37,7 @@ export class ProductsService {
     return this.prisma.product.delete({ where: { id: id } });
   }
 
-  async findPage() {
+  async findPage(connectionArgs: ConnectionArgs) {
     const where: Prisma.ProductWhereInput = {
       published: true,
     };
@@ -51,7 +52,7 @@ export class ProductsService {
         this.prisma.product.count({
           where: where,
         }),
-      {}, // 👈 returns all product records
+      connectionArgs, // 👈 returns all product records
     );
   }
 }

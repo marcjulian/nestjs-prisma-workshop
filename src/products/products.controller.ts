@@ -1,3 +1,4 @@
+import { ConnectionArgs } from './../page/connection-args.dto';
 import {
   Controller,
   Get,
@@ -6,6 +7,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -41,8 +43,8 @@ export class ProductsController {
   }
   
   @Get('page')
-  async findPage() {
-    return this.productsService.findPage();
+  async findPage(@Query() connectionArgs: ConnectionArgs) {
+    return this.productsService.findPage(connectionArgs);
   }
 
   @Get(':id')
