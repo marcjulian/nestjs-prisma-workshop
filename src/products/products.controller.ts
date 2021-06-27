@@ -1,3 +1,4 @@
+import { Page } from '../page/page.dto';
 import { ConnectionArgs } from './../page/connection-args.dto';
 import {
   Controller,
@@ -13,10 +14,18 @@ import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ProductEntity } from './entities/product.entity';
-import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiCreatedResponse,
+  ApiExtraModels,
+  ApiOkResponse,
+  ApiTags,
+  getSchemaPath,
+} from '@nestjs/swagger';
 
 @Controller('products')
+@Controller('products')
 @ApiTags('products')
+@ApiExtraModels(Page)
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
@@ -41,8 +50,30 @@ export class ProductsController {
     const drafts = await this.productsService.findDrafts();
     return drafts.map((product) => new ProductEntity(product));
   }
-  
+
   @Get('page')
+  @ApiOkResponse({
+    schema: {
+      allOf: [
+        { $ref: getSchemaPath(Page) },
+        {
+          properties: {
+            edges: {
+              type: 'array',
+              items: {
+                type: 'object',
+                required: ['cursor', 'node'],
+                properties: {
+                  cursor: { type: 'string' },
+                  node: { type: 'object', $ref: getSchemaPath(ProductEntity) },
+                },
+              },
+            },
+          },
+        },
+      ],
+    },
+  })
   async findPage(@Query() connectionArgs: ConnectionArgs) {
     return this.productsService.findPage(connectionArgs);
   }
