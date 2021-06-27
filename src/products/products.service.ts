@@ -3,6 +3,7 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { PrismaService } from './../prisma/prisma.service';
 import { findManyCursorConnection } from '@devoxa/prisma-relay-cursor-connection';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class ProductsService {
@@ -36,10 +37,20 @@ export class ProductsService {
   }
 
   async findPage() {
+    const where: Prisma.ProductWhereInput = {
+      published: true,
+    };
     return findManyCursorConnection(
       // 👇 args contain take, skip and cursor
-      (args) => this.prisma.product.findMany(args),
-      () => this.prisma.product.count(),
+      (args) =>
+        this.prisma.product.findMany({
+          ...args, // 👈 apply paging arguments
+          where: where,
+        }),
+      () =>
+        this.prisma.product.count({
+          where: where,
+        }),
       {}, // 👈 returns all product records
     );
   }
