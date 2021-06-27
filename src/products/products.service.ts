@@ -1,3 +1,4 @@
+import { ProductEntity } from './entities/product.entity';
 import { ConnectionArgs } from './../page/connection-args.dto';
 import { Injectable } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -5,6 +6,7 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { PrismaService } from './../prisma/prisma.service';
 import { findManyCursorConnection } from '@devoxa/prisma-relay-cursor-connection';
 import { Prisma } from '@prisma/client';
+import { Page } from 'src/page/page.dto';
 
 @Injectable()
 export class ProductsService {
@@ -41,7 +43,7 @@ export class ProductsService {
     const where: Prisma.ProductWhereInput = {
       published: true,
     };
-    return findManyCursorConnection(
+    const productPage = await findManyCursorConnection(
       // 👇 args contain take, skip and cursor
       (args) =>
         this.prisma.product.findMany({
@@ -53,6 +55,12 @@ export class ProductsService {
           where: where,
         }),
       connectionArgs, // 👈 returns all product records
+      {
+        recordToEdge: (record) => ({
+          node: new ProductEntity(record), // 👈 instance to transform price
+        }),
+      },
     );
+    return new Page<ProductEntity>(productPage); // 👈 instance as this object is returned
   }
 }
