@@ -19,7 +19,6 @@ import {
   ApiExtraModels,
   ApiOkResponse,
   ApiTags,
-  getSchemaPath,
 } from '@nestjs/swagger';
 import { ApiPageResponse } from 'src/page/api-page-response.decorator';
 
