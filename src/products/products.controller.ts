@@ -21,6 +21,7 @@ import {
   ApiTags,
   getSchemaPath,
 } from '@nestjs/swagger';
+import { ApiPageResponse } from 'src/page/api-page-response.decorator';
 
 @Controller('products')
 @Controller('products')
@@ -52,28 +53,7 @@ export class ProductsController {
   }
 
   @Get('page')
-  @ApiOkResponse({
-    schema: {
-      allOf: [
-        { $ref: getSchemaPath(Page) },
-        {
-          properties: {
-            edges: {
-              type: 'array',
-              items: {
-                type: 'object',
-                required: ['cursor', 'node'],
-                properties: {
-                  cursor: { type: 'string' },
-                  node: { type: 'object', $ref: getSchemaPath(ProductEntity) },
-                },
-              },
-            },
-          },
-        },
-      ],
-    },
-  })
+  @ApiPageResponse(ProductEntity)
   async findPage(@Query() connectionArgs: ConnectionArgs) {
     return this.productsService.findPage(connectionArgs);
   }
