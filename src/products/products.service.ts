@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { PrismaService } from './../prisma/prisma.service';
+import { findManyCursorConnection } from '@devoxa/prisma-relay-cursor-connection';
 
 @Injectable()
 export class ProductsService {
@@ -34,7 +35,12 @@ export class ProductsService {
     return this.prisma.product.delete({ where: { id: id } });
   }
 
-  findPage() {
-    // TODO implement cursor-base pagination
+  async findPage() {
+    return findManyCursorConnection(
+      // 👇 args contain take, skip and cursor
+      (args) => this.prisma.product.findMany(args),
+      () => this.prisma.product.count(),
+      {}, // 👈 returns all product records
+    );
   }
 }
