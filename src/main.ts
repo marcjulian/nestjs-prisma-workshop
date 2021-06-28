@@ -28,6 +28,7 @@ async function bootstrap() {
     .setTitle('Prisma Day - NestJS Prisma Workshop')
     .setDescription('Building a REST API with NestJS and Prisma')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document, { customSiteTitle: 'Prisma Day' });
