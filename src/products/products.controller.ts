@@ -23,7 +23,6 @@ import {
 import { ApiPageResponse } from 'src/page/api-page-response.decorator';
 
 @Controller('products')
-@Controller('products')
 @ApiTags('products')
 @ApiExtraModels(Page)
 export class ProductsController {
