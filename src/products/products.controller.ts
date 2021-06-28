@@ -24,7 +24,6 @@ import { ApiPageResponse } from 'src/page/api-page-response.decorator';
 
 @Controller('products')
 @ApiTags('products')
-@Controller('products')
 @ApiExtraModels(Page)
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
