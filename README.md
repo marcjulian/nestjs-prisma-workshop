@@ -30,3 +30,7 @@ npm install
 ```bash
 npm i -g @nestjs/cli
 ```
+
+## Workshop
+
+Use this repo as the starting point and follow the lessons for [the workshop](https://pris.ly/day2021-nestjs).
