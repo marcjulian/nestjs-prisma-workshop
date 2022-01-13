@@ -33,4 +33,5 @@ npm i -g @nestjs/cli
 
 ## Workshop
 
-Use this repo as the starting point and follow the lessons for [the workshop](https://pris.ly/day2021-nestjs).
+Use this repo as the starting point and follow the lessons for the [workshop](https://pris.ly/day2021-nestjs).
+The recorded version is available on Youtube [Building a REST API with NestJS and Prisma](https://www.youtube.com/watch?v=mmbd5hcQUaY).
