@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete,Req } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Req,
+} from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -11,26 +20,26 @@ export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Post()
-  create(@Req() req , @Body() createProductDto: CreateProductDto) {
-    console.log(req.body)
+  create(@Req() req, @Body() createProductDto: CreateProductDto) {
+    console.log(req.body);
     return this.productsService.create(createProductDto);
   }
 
   @Get()
-  @ApiOkResponse({type :ProductEntity,isArray:true})
+  @ApiOkResponse({ type: ProductEntity, isArray: true })
   findAll() {
     return this.productsService.findAll();
   }
 
   @Get('draft')
-  GetDraft(){
-    return this.productsService.GetDraft()
+  GetDraft() {
+    return this.productsService.GetDraft();
   }
 
   @Get(':id')
-findOne(@Param('id') id: string) {
-	return this.productsService.findOne(id);
-}
+  findOne(@Param('id') id: string) {
+    return this.productsService.findOne(id);
+  }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
