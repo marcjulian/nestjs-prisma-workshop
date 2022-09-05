@@ -7,30 +7,30 @@ import { UpdateProductDto } from './dto/update-product.dto';
 export class ProductsService {
   constructor(private prisma: PrismaService) {}
 
-  create( createProductDto: CreateProductDto ) {
-    return this.prisma.product.create({data: createProductDto});
+  create(createProductDto: CreateProductDto) {
+    return this.prisma.product.create({ data: createProductDto });
   }
 
   findAll() {
-    return this.prisma.product.findMany({ where: { published: true } });;
+    return this.prisma.product.findMany({ where: { published: true } });
   }
 
-  GetDraft(){
-    return this.prisma.product.findMany({where:{published: false}})
+  GetDraft() {
+    return this.prisma.product.findMany({ where: { published: false } });
   }
 
   findOne(id: string) {
-	return this.prisma.product.findUnique({ where: { id: id } });
-}
+    return this.prisma.product.findUnique({ where: { id: id } });
+  }
 
-update(id: string, updateProductDto: UpdateProductDto) {
-	return this.prisma.product.update({
-		where: { id: id },
-		data: updateProductDto,
-	});
-}
+  update(id: string, updateProductDto: UpdateProductDto) {
+    return this.prisma.product.update({
+      where: { id: id },
+      data: updateProductDto,
+    });
+  }
 
-remove(id: string) {
-	return this.prisma.product.delete({ where: { id: id } });
-}
+  remove(id: string) {
+    return this.prisma.product.delete({ where: { id: id } });
+  }
 }
